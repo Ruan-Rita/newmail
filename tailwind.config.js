@@ -17,6 +17,15 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                transparent: 'transparent',
+                current: 'currentColor',
+                'app-green': '#05FF4A',
+                'app-blue': '#172E69',
+                'app-orange': '#FD9029',
+                'app-black': '#101010',
+                'app-red': '#FF5F5F',
+            },
         },
     },
 
