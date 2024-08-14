@@ -1,6 +1,6 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
-import ShoppingCartSvg from '@/Components/Svg/ShoppingCartSvg.vue';
+import ShoppingBagSvg from '@/Components/Svg/ShoppingBagSvg.vue';
 import EnvelopeSvg from '@/Components/Svg/EnvelopeSvg.vue';
 import LockedSvg from '@/Components/Svg/LockedSvg.vue';
 import DealHandsSvg from '@/Components/Svg/DealHandsSvg.vue';
@@ -64,7 +64,7 @@ import TextInput from '@/Components/TextInput.vue';
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                         <div class="h-[262px] border border-app-orange rounded-xl p-5">
                             <div class="w-full flex justify-center my-2 mb-4">
-                                <ShoppingCartSvg class="bg-app-orange p-2 w-14 h-14 rounded-xl" />
+                                <ShoppingBagSvg class="bg-app-orange p-2 w-14 h-14 rounded-xl" />
                             </div>
                             <h1 class="text-sm text-center font-bold text-app-blue">Confirmação de compra</h1>
                             <p class="text-center text-sm">Os consumidores valorizam as confirmações de recebimento de
