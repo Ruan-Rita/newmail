@@ -14,6 +14,7 @@ import SupportSvg from '@/Components/Svg/SupportSvg.vue';
 import SettingSvg from '@/Components/Svg/SettingSvg.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
+import NavLink from '@/Components/NavLink.vue';
 
 
 defineProps({
@@ -44,7 +45,7 @@ const logout = () => {
                             </h1>
                         </div>
                         <section class="mt-10 flex flex-col gap-7 px-5">
-                            <Collapse class="text-white">
+                            <Collapse class="text-white border-r-2 pr-3 border-white" :class="{'border-app-green': route().current('dashboard') || route().current('dashboard.create_campaign')}">
                                 <template #title>
                                     <div class="flex gap-4 items-center">
                                         <CursorLightSvg class="fill-transparent stroke-white"/>
@@ -53,13 +54,12 @@ const logout = () => {
                                         </h1>
                                     </div>
                                 </template>
-                                <div class="px-5 py-2 bg-blue-950 mt-2">
-                                    <h1>Link a1</h1>
-                                    <h1>Link a2</h1>
-                                    <h1>Link a3</h1>
+                                <div class="px-5 py-2 pl-4mt-2 flex flex-col">
+                                    <NavLink :href="route('dashboard')" :class="{'bg-app-green': route().current('dashboard')}" class="hover:text-white rounded-md text-lg">Listas</NavLink>
+                                    <NavLink :href="route('dashboard.create_campaign')" :class="{'bg-app-green': route().current('dashboard.create_campaign')}" class="hover:text-white rounded-md text-lg">Nova Campanha</NavLink>
                                 </div>
                             </Collapse>
-                            <Collapse class="text-white">
+                            <Collapse class="text-white border-r-2 pr-3 border-white">
                                 <template #title>
                                     <div class="flex gap-4 items-center">
                                         <SiteSvg class="fill-white" />
@@ -80,7 +80,7 @@ const logout = () => {
                                     Site
                                 </h1>
                             </div>
-                            <Collapse class="text-white" title="Reports">
+                            <Collapse class="text-white border-r-2 pr-3 border-white" title="Reports">
                                 <template #title>
                                     <div class="flex gap-4 items-center">
                                         <ReportsSvg class="fill-white"/>
@@ -132,7 +132,7 @@ const logout = () => {
                                     </button>
 
                                     <span v-else class="inline-flex rounded-md">
-                                        <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 hover:text-gray-700 transition ease-in-out duration-150">
+                                        <button type="button" class="inline-flex items-center py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 hover:text-gray-700 transition ease-in-out duration-150">
                                             Welcome, {{ $page.props.auth.user.name }}
 
                                             <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">

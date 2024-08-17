@@ -5,13 +5,15 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import Dropdown from '@/Components/Dropdown.vue';
-import MiniButtons from '@/Components/ButtonsActions/MiniButtons.vue';
 import { reactive, ref } from 'vue';
+import { Link } from '@inertiajs/vue3';
 
 var dropFilter = reactive({
     filter: 'Todos',
     order: 'Data de criação'
 })
+
+const showModalCampaigns = ref(false)
 
 function dropValue(attr, value = null) {
     if (attr === 'clear') {
@@ -26,8 +28,8 @@ const tableColumns = [
 ];
 const campaignsRows = [
     ['Dia dos Namorados', 'Novas Contas', '12 Jun 2024', '245 enviados 180 abertos 50 clicks', {action: true}],
-    ['Dia dos Namorados', 'Novas Contas', '12 Jun 2024', '245 enviados 180 abertos 50 clicks', {action: true}],
-    ['Dia dos Namorados', 'Novas Contas', '12 Jun 2024', '245 enviados 180 abertos 50 clicks', {action: true}],
+    ['Dia dos Namorados', 'Novas Contas, SegCadastrado', '12 Jun 2024', '245 enviados 180 abertos 50 clicks', {action: true}],
+    ['Dia dos Namorados', 'Novas Contas, SegCadastrado', '12 Jun 2024', '245 enviados 180 abertos 50 clicks', {action: true}],
     ['Dia dos Namorados', 'Novas Contas', '12 Jun 2024', '245 enviados 180 abertos 50 clicks', {action: true}],
 ];
 </script>
@@ -38,7 +40,11 @@ const campaignsRows = [
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex justify-between mb-5">
                     <TextInput class="w-72" placeholder="Search here . . ."/>
-                    <PrimaryButton class="bg-app-red">New Customer</PrimaryButton>
+                    <Link :href="route('dashboard.create_campaign')">
+                        <PrimaryButton class="bg-app-red">
+                            New Customer
+                        </PrimaryButton>
+                    </Link>
                 </div>
                 <section class="flex gap-4">
                     <div class="relative w-fit">
