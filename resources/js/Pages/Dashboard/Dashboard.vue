@@ -42,7 +42,7 @@ const campaignsRows = [
                     <TextInput class="w-72" placeholder="Search here . . ."/>
                     <Link :href="route('dashboard.create_campaign')">
                         <PrimaryButton class="bg-app-red">
-                            New Customer
+                            New Campaign
                         </PrimaryButton>
                     </Link>
                 </div>
