@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('segmentation')->nullable();
-            $table->enum('status', array_map(fn($case) => $case->value, CampaignStatusEnum::cases()))->nullable()->default(CampaignStatusEnum::DRAFT);
+            $table->enum('status', array_map(fn ($case) => $case->value, CampaignStatusEnum::cases()))->nullable()->default(CampaignStatusEnum::DRAFT);
             $table->dateTime('send_at');
             $table->text('content')->nullable();
             $table->timestamps();

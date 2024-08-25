@@ -12,7 +12,7 @@ abstract class Controller
         return json_encode([
             'status' => 'success',
             'code' => $code,
-            'data' => $data
+            'data' => $data,
         ]);
     }
 
@@ -25,7 +25,7 @@ abstract class Controller
             'status' => 'error',
             'code' => $code,
             'data' => $errors,
-            'message' => $message ?: 'An unexpected error occurred. Please try again later.'
+            'message' => $message ?: 'An unexpected error occurred. Please try again later.',
         ]);
     }
 }

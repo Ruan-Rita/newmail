@@ -5,7 +5,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import Dropdown from '@/Components/Dropdown.vue';
-import { reactive, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { Link } from '@inertiajs/vue3';
 
 var dropFilter = reactive({
@@ -26,12 +26,35 @@ function dropValue(attr, value = null) {
 const tableColumns = [
     'Nome', 'Publico', 'Enviado', 'Análise', 'Ações'
 ];
-const campaignsRows = [
-    ['Dia dos Namorados', 'Novas Contas', '12 Jun 2024', '245 enviados 180 abertos 50 clicks', {action: true}],
-    ['Dia dos Namorados', 'Novas Contas, SegCadastrado', '12 Jun 2024', '245 enviados 180 abertos 50 clicks', {action: true}],
-    ['Dia dos Namorados', 'Novas Contas, SegCadastrado', '12 Jun 2024', '245 enviados 180 abertos 50 clicks', {action: true}],
-    ['Dia dos Namorados', 'Novas Contas', '12 Jun 2024', '245 enviados 180 abertos 50 clicks', {action: true}],
-];
+
+const campaign = reactive({
+    rows: [],
+    all: []
+})
+
+const getCampaings = () => {
+    return axios.get(route('campaign.all')).then(response => {
+        console.log('Response', response)
+        if (response.data.code === 200) {
+            const dataResponse = response.data.data;
+            console.log('data response', dataResponse)
+            campaign.rows = dataResponse.map(item => {
+                return [
+                    item.title,
+                    item.segmentation,
+                    item.send_at,
+                    item.status,
+                    {action: true}
+                ]
+            });
+            campaign.all = dataResponse
+        }
+    });
+};
+
+onMounted(() => {
+    getCampaings()
+})
 </script>
 
 <template>
@@ -99,7 +122,7 @@ const campaignsRows = [
                     </div>
                 </section>
                 <div class="overflow-hidden mt-5 rounded-lg shadow-app-blue shadow">
-                    <Table :cols="tableColumns" :rows="campaignsRows"/>
+                    <Table :cols="tableColumns" :rows="campaign.rows"/>
                 </div>
             </div>
         </div>

@@ -14,6 +14,6 @@ class Campaign extends Model
         'segmentation',
         'status',
         'send_at',
-        'content'
+        'content',
     ];
 }

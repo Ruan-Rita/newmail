@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Campaign;
 use Illuminate\Database\Seeder;
 
 class CampaignSeeder extends Seeder
@@ -12,6 +12,8 @@ class CampaignSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        if ( Campaign::count() <= 30) {
+            Campaign::factory()->count(30)->create();
+        }
     }
 }
