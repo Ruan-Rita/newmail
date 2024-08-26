@@ -12,8 +12,8 @@ class CampaignSeeder extends Seeder
      */
     public function run(): void
     {
-        if ( Campaign::count() <= 30) {
-            Campaign::factory()->count(30)->create();
+        if ( Campaign::count() <= 50) {
+            Campaign::factory()->count(50)->create();
         }
     }
 }

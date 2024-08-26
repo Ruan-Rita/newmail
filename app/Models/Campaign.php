@@ -15,5 +15,6 @@ class Campaign extends Model
         'status',
         'send_at',
         'content',
+        'user_id',
     ];
 }

@@ -4,13 +4,18 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Campaign;
+use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
 
 class CampaignApiController extends Controller
 {
     public function index(Request $request)
     {
-        $campaigns = Campaign::all();
+        // dd(Auth::check(), auth()->user(), $request->user());
+        // ->campaigns()->paginate($request->per_page);
+        $campaigns = Campaign::orderBy('created_at', 'DESC')
+            ->paginate(7);
 
         return $this->json($campaigns);
     }

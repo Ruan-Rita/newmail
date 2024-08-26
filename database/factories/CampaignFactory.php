@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enum\Campaign\CampaignStatusEnum;
 use App\Models\Campaign;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -28,6 +29,7 @@ class CampaignFactory extends Factory
             'status' => CampaignStatusEnum::DRAFT,
             'send_at' => $date,
             'content' => $this->faker->text(),
+            'user_id' => User::first()->id,
             'created_at' => $date,
             'updated_at' => $date,
         ];

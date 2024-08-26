@@ -7,6 +7,7 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import { onMounted, reactive, ref } from 'vue';
 import { Link } from '@inertiajs/vue3';
+import Paginator from '@/Components/Paginator.vue';
 
 var dropFilter = reactive({
     filter: 'Todos',
@@ -29,16 +30,23 @@ const tableColumns = [
 
 const campaign = reactive({
     rows: [],
-    all: []
+    all: [],
+    links: [],
+    per_page: 10,
+    current_page: 1,
+    total: 30
 })
 
-const getCampaings = () => {
-    return axios.get(route('campaign.all')).then(response => {
-        console.log('Response', response)
+const getCampaings = (url = null) => {
+    return axios.get(url || route('campaign.all')).then(response => {
         if (response.data.code === 200) {
             const dataResponse = response.data.data;
-            console.log('data response', dataResponse)
-            campaign.rows = dataResponse.map(item => {
+            campaign.current_page = dataResponse.current_page
+            campaign.links = dataResponse.links
+            campaign.per_page = dataResponse.per_page
+            campaign.total = dataResponse.total
+            campaign.all = dataResponse.data
+            campaign.rows = dataResponse.data.map(item => {
                 return [
                     item.title,
                     item.segmentation,
@@ -47,7 +55,8 @@ const getCampaings = () => {
                     {action: true}
                 ]
             });
-            campaign.all = dataResponse
+            console.log('O que tmeos', campaign);
+            
         }
     });
 };
@@ -123,6 +132,7 @@ onMounted(() => {
                 </section>
                 <div class="overflow-hidden mt-5 rounded-lg shadow-app-blue shadow">
                     <Table :cols="tableColumns" :rows="campaign.rows"/>
+                    <Paginator class="bg-gray-600 ml-auto  text-white" :current_page="campaign.current_page" :links="campaign.links" :total="campaign.total" :retrieveData="getCampaings"/>
                 </div>
             </div>
         </div>
