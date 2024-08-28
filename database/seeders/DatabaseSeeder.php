@@ -14,10 +14,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         if (! User::where('email', 'ruan@nexmail.com')->exists()) {
-            User::factory()->create([
+            User::factory()->withPersonalTeam()->create([
                 'name' => 'Test User',
-                'email' => 'ruan@nexmail.com',
-                'password'=> Hash::make('tO9}6EA83vjW'),
+                    'email' => 'ruan@nexmail.com',
+                    'password'=> Hash::make('tO9}6EA83vjW'),
             ]);
         }
         $this->call(CampaignSeeder::class);
