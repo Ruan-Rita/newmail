@@ -12,9 +12,8 @@ class CampaignApiController extends Controller
 {
     public function index(Request $request)
     {
-        // dd(Auth::check(), auth()->user(), $request->user());
-        // ->campaigns()->paginate($request->per_page);
         $campaigns = Campaign::orderBy('created_at', 'DESC')
+            ->where('user_id', Auth::user()->id)
             ->paginate(7);
 
         return $this->json($campaigns);

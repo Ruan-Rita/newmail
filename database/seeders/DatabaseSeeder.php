@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        User::factory(2)->create();
         if (! User::where('email', 'ruan@nexmail.com')->exists()) {
             User::factory()->withPersonalTeam()->create([
                 'name' => 'Test User',
