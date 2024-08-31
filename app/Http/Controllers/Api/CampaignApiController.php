@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Campaign;
 use App\Models\User;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CampaignApiController extends Controller
@@ -21,8 +22,11 @@ class CampaignApiController extends Controller
 
     public function store(Request $request)
     {
-        $campaign = Campaign::create($request->all());
-        $this->json($campaign);
+        $data = $request->all();
+        $data['user_id'] = $request->user()->id;
+        $data['send_at'] = Carbon::parse($data['send_at']);
+        $campaign = Campaign::create($data);
+        return $this->json($campaign);
     }
 
     public function show(int $code)
