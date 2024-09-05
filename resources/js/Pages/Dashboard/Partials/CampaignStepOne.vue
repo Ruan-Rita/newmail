@@ -17,6 +17,9 @@ const props = defineProps({
     success: {}
 })
 
+const emit = defineEmits(['success']);
+
+
 const formCampaign = useForm({
    title: 'ruan',
    segmentation: 'top segm',
@@ -30,7 +33,7 @@ const createCampaign = function() {
     }).then(response => {
         console.log('Success step 1',response.data, response.data.status === 'success');
         if (response.data.status === 'success') {
-            props.success(response.data.data)
+            emit('success', response.data.data)
             return;
         }
         formCampaign.setError(response.data.errors)

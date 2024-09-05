@@ -5,6 +5,8 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import '@vueup/vue-quill/dist/vue-quill.bubble.css';
 import NoStyle from '@/Components/NoStyle.vue';
 
+const emit = defineEmits(['success']);
+
 const props = defineProps({
     step: {
         type: Number
@@ -23,7 +25,7 @@ function renderContent() {
 
 function submit() {
     console.log('Success step 2');
-    props.success()
+    emit('success')
 }
 </script>
 <template>
