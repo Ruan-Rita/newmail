@@ -9,7 +9,7 @@ import axios from 'axios';
 
 const emit = defineEmits(['close', 'onCreate']);
 
-const props = defineEmits({
+const props = defineProps({
     actions: {
         type: String
     }

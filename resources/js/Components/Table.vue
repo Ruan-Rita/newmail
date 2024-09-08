@@ -1,7 +1,6 @@
 <script setup>
 import MiniButtons from './ButtonsActions/MiniButtons.vue';
 
-
 defineProps({
   cols: {
     required: true,
@@ -27,9 +26,15 @@ defineProps({
       <tr class="bg-gray-100 hover:!bg-red-100 transition duration-200" v-for="row of rows">
         <td class="px-6 py-4 text-gray-900" v-for="(value, indexColumn) in cols">
           <span v-if="typeof row[indexColumn] == 'string'">{{ row[indexColumn] }}</span>
-          <span v-else>
-            <mini-buttons />
+          <span v-else-if="typeof row[indexColumn] == 'object' && row[indexColumn]">
+            <MiniButtons 
+              :edit="row[indexColumn].edit " 
+              :show="row[indexColumn].show " 
+              :copy="row[indexColumn].copy " 
+              :del="row[indexColumn].del " 
+              :data="row[indexColumn].data"/>
           </span>
+          <span v-else>'NONE'</span>
         </td>
       </tr>
     </tbody>

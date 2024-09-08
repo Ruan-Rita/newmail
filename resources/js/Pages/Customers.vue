@@ -39,13 +39,24 @@ const getCustomers = (url = null) => {
                     customerAttr.email,
                     customerAttr.phone_number,
                     customerAttr.address,
-                    {action: true}
+                    {
+                        edit: updateCustomer, 
+                        del: deleteCustomer, 
+                        data: customerAttr
+                    }
                 ]
             });
             
         }
     });
 };
+
+function updateCustomer(customer) {
+    console.log('OPa bora abrir o modal de edit customer', customer)
+} 
+function deleteCustomer(customer) {
+    console.log('OPa bora deletar o modal de edit customer', customer)
+} 
 
 onMounted(() => {
     getCustomers()

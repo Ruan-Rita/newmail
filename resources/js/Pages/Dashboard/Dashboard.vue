@@ -52,7 +52,13 @@ const getCampaings = (url = null) => {
                     item.segmentation,
                     item.send_at,
                     item.status,
-                    {action: true}
+                    {
+                        show: showCampaign, 
+                        copy: duplicateCampaign, 
+                        edit: updateCampaign, 
+                        del: deleteCampaign, 
+                        data: item
+                    }
                 ]
             });
             console.log('O que tmeos', campaign);
@@ -60,6 +66,15 @@ const getCampaings = (url = null) => {
         }
     });
 };
+
+function showCampaign(campaign) {
+} 
+function duplicateCampaign(campaign) {
+} 
+function updateCampaign(campaign) {
+} 
+function deleteCampaign(campaign) {
+} 
 
 onMounted(() => {
     getCampaings()
