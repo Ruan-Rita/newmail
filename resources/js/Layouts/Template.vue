@@ -95,12 +95,12 @@ const logout = () => {
                                     <h1>Link a3</h1>
                                 </div>
                             </Collapse>
-                            <div class="flex gap-4 items-center">
-                                <CustomersSvg class="stroke-white" />
-                                <h1 class="text-xl text-white">
+                            <NavLink :href="route('customers')" class="flex gap-4 items-center border-none group group-hover:text-gray-200 text-white ">
+                                <CustomersSvg class="group-hover:stroke-gray-400" :class="{'stroke-app-green': route().current('customers'), 'stroke-white': !route().current('customers')}" />
+                                <span class="text-lg" :class="{'text-app-green': route().current('customers')}">
                                     Customers
-                                </h1>
-                            </div>
+                                </span>
+                            </NavLink>
                         </section>
                     </div>
                     <section class="flex flex-col gap-5 px-5">

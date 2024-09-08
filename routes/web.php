@@ -20,6 +20,12 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 });
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
+    Route::get('/customers', function () {
+        return Inertia::render('Customers');
+    })->name('customers');
+});
+
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::get('/dashboard/new-campaign', function () {
         return Inertia::render('Dashboard/CreateCampaigns');
     })->name('dashboard.create_campaign');

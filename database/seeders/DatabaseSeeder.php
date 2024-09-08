@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder
             ]);
         }
         $this->call(CampaignSeeder::class);
+        $this->call(CustomerSeeder::class);
     }
-
-
 }

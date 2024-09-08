@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Campaign;
+use App\Models\Customer;
 use App\Models\User;
 use Auth;
 use Carbon\Carbon;
