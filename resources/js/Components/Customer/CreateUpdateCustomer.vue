@@ -12,18 +12,22 @@ const emit = defineEmits(['close', 'onCreate']);
 const props = defineProps({
     actions: {
         type: String
+    },
+    customer: {
+        type: Object,
+        default: null
     }
 })
 
-const action = this.props.action || 'CREATE';
+const action = props.actions || 'CREATE';
 
 const form = useForm({
-    name: 'ruan rita',
-    email: 'ruan@gmail.com',
-    phone_number: '5512988437057',
-    address: 'rua de tal',
-    country: 'United State',
-    city: 'Cruzeiro',
+    name: props.customer?.name || '',
+    email: props.customer?.email || '',
+    phone_number: props.customer?.phone_number || '',
+    address: props.customer?.address || '',
+    country: props.customer?.country || '',
+    city: props.customer?.city || '',
 });
 
 function submitCreate() {
@@ -35,7 +39,7 @@ function submitCreate() {
 }
 
 function submitUpdate() {
-    axios.post(route('customers.store'), form.data()).then(response => {
+    axios.put(route('customers.update', {customer: props.customer.id}), form.data()).then(response => {
         console.log('Response', response)
         emit('onUpdate')
         emit('close')
@@ -44,7 +48,7 @@ function submitUpdate() {
 
 function submit() {
     form.processing = true;
-
+    
     if (action === 'CREATE') {
         submitCreate();
     } else {
@@ -127,7 +131,8 @@ function submit() {
                 Close
             </SecondaryButton>
             <PrimaryButton @click="submit" class="bg-app-blue" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Continue
+                <span v-if="action === 'CREATE'">Create</span>
+                <span v-else="action === 'CREATE'">Update</span>
             </PrimaryButton>
         </div>
     </section>

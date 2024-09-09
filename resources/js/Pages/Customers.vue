@@ -1,27 +1,37 @@
 <script setup>
 import Template from '@/Layouts/Template.vue';
 import Table from '@/Components/Table.vue';
-import CreateCustomer from '@/Components/Customer/CreateCustomer.vue';
+import CreateUpdateCustomer from '@/Components/Customer/CreateUpdateCustomer.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { onMounted, reactive, ref } from 'vue';
 import Paginator from '@/Components/Paginator.vue';
 import DialogModal from '@/Components/DialogModal.vue';
+import ConfirmationModal from '@/Components/ConfirmationModal.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
+import axios from 'axios';
 
 const tableColumns = [
     'Nome', 'Email', 'Telefone', 'Endereco', 'Ações'
 ];
 
-const showCreateCustomer = ref(false)
 
+const showCreateCustomer = ref(false)
+const optionCustomer = ref({
+    update: false,
+    deleteConfirmation: false
+})
 const customer = reactive({
     rows: [],
     all: [],
     links: [],
     per_page: 10,
     current_page: 1,
-    total: 30
+    total: 30,
+
 })
+
+let updateCustomerData = null
 
 const getCustomers = (url = null) => {
     return axios.get(url || route('customers.index')).then(response => {
@@ -52,11 +62,19 @@ const getCustomers = (url = null) => {
 };
 
 function updateCustomer(customer) {
-    console.log('OPa bora abrir o modal de edit customer', customer)
+    updateCustomerData = customer
+    optionCustomer.value.update = true;
 } 
+
 function deleteCustomer(customer) {
-    console.log('OPa bora deletar o modal de edit customer', customer)
+    optionCustomer.value.deleteConfirmation = customer
 } 
+
+function deleteCustomerApi() {
+    axios.delete(route('customers.destroy', {customer: optionCustomer.value.deleteConfirmation.id}))
+    optionCustomer.value.deleteConfirmation = false
+    getCustomers()
+}
 
 onMounted(() => {
     getCustomers()
@@ -87,7 +105,31 @@ onMounted(() => {
         </template>
 
         <template #content>
-            <CreateCustomer @close="showCreateCustomer = false" @onCreate="getCustomers()"/>
+            <CreateUpdateCustomer @close="showCreateCustomer = false" @onCreate="getCustomers()"/>
         </template>
     </DialogModal>
+
+    <DialogModal :closeable="false" :show="optionCustomer.update" @close="optionCustomer.update = false">
+        <template #title>
+            Update Customer
+        </template>
+
+        <template #content>
+            <CreateUpdateCustomer actions="UPDATE" :customer="updateCustomerData" @close="optionCustomer.update = false" @onUpdate="getCustomers()"/>
+        </template>
+    </DialogModal>
+    <ConfirmationModal :show="optionCustomer.deleteConfirmation" @close="optionCustomer.deleteConfirmation = false">
+        <template #title>
+            Deletar Customer - {{ optionCustomer.deleteConfirmation.name }}
+        </template>
+
+        <template #content>
+            <SecondaryButton class="mr-2" @click="optionCustomer.deleteConfirmation = false">
+                Cancel
+            </SecondaryButton>
+            <PrimaryButton @click.once.stop="deleteCustomerApi" class="bg-red-400">
+                Delete
+            </PrimaryButton>
+        </template>
+    </ConfirmationModal>
 </template>
