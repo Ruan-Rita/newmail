@@ -17,13 +17,19 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard/Dashboard');
     })->name('dashboard');
-});
-
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::get('/customers', function () {
         return Inertia::render('Customers');
     })->name('customers');
+    
+    Route::get('/settings', function () {
+        return Inertia::render('Settings');
+    })->name('settings');
+   
+    Route::get('/reports', function () {
+        return Inertia::render('Reports');
+    })->name('reports');
 });
+
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::get('/dashboard/new-campaign', function () {

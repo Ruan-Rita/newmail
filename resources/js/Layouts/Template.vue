@@ -80,43 +80,35 @@ const logout = () => {
                                     Site
                                 </h1>
                             </div>
-                            <Collapse class="text-white border-r-2 pr-3 border-white" title="Reports">
-                                <template #title>
-                                    <div class="flex gap-4 items-center">
-                                        <ReportsSvg class="fill-white"/>
-                                        <h1 class="text-xl text-white">
-                                            Reports
-                                        </h1>
-                                    </div>
-                                </template>
-                                <div class="px-5 py-2 bg-blue-950 mt-2">
-                                    <h1>Link a1</h1>
-                                    <h1>Link a2</h1>
-                                    <h1>Link a3</h1>
-                                </div>
-                            </Collapse>
+                            <NavLink :href="route('reports')" class="flex gap-4 items-center border-none group group-hover:text-gray-200 text-white ">
+                                <ReportsSvg class="group-hover:fill-gray-400" :class="{'fill-app-green': route().current('reports'), 'fill-white': !route().current('reports')}"/>
+                                <h1 class="text-xl group-hover:text-gray-400" :class="{'text-app-green': route().current('reports')}">
+                                    Reports
+                                </h1>
+                            </NavLink>
                             <NavLink :href="route('customers')" class="flex gap-4 items-center border-none group group-hover:text-gray-200 text-white ">
                                 <CustomersSvg class="group-hover:stroke-gray-400" :class="{'stroke-app-green': route().current('customers'), 'stroke-white': !route().current('customers')}" />
-                                <span class="text-lg" :class="{'text-app-green': route().current('customers')}">
+                                <span class="text-lg group-hover:text-gray-400" :class="{'text-app-green': route().current('customers')}">
                                     Customers
                                 </span>
                             </NavLink>
                         </section>
                     </div>
                     <section class="flex flex-col gap-5 px-5">
-                        <div class="flex gap-4 items-center">
-                            <SupportSvg class="fill-app-green"/>
-                            <h1 class="text-xl text-app-green">
+                        <NavLink :href="route('customers')" class="flex gap-4 p-0 m-0 items-center border-none group group-hover:text-gray-200 text-white">
+                            <SupportSvg class="fill-gray-400"/>
+                            <h1 class="text-xl text-gray-400">
                                 Supports
                             </h1>
-                        </div>
-                        <div class="flex gap-4 items-center">
+                        </NavLink>
+
+                        <NavLink :href="route('settings')" class="flex gap-4 p-0 m-0 items-center border-none group group-hover:text-gray-200 text-white">
                             <SettingSvg class="stroke-white"/>
 
                             <h1 class="text-xl text-white">
                                 Settings
                             </h1>
-                        </div>
+                        </NavLink>
                     </section>
                 </nav>
             </div>      
