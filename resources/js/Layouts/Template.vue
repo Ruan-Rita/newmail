@@ -74,12 +74,12 @@ const logout = () => {
                                     <h1>Link a3</h1>
                                 </div>
                             </Collapse>
-                            <div class="flex gap-4 items-center">
-                                <ShoppingCartSvg class="stroke-white" />
-                                <h1 class="text-xl text-white">
-                                    Site
+                            <NavLink :href="route('website')" class="flex gap-4 items-center border-none group group-hover:text-gray-200 text-white ">
+                                <ShoppingCartSvg class="group-hover:stroke-gray-400" :class="{'stroke-app-green': route().current('website'), 'stroke-white': !route().current('website')}"/>
+                                <h1 class="text-xl group-hover:text-gray-400" :class="{'text-app-green': route().current('website')}">
+                                    Website
                                 </h1>
-                            </div>
+                            </NavLink>
                             <NavLink :href="route('reports')" class="flex gap-4 items-center border-none group group-hover:text-gray-200 text-white ">
                                 <ReportsSvg class="group-hover:fill-gray-400" :class="{'fill-app-green': route().current('reports'), 'fill-white': !route().current('reports')}"/>
                                 <h1 class="text-xl group-hover:text-gray-400" :class="{'text-app-green': route().current('reports')}">

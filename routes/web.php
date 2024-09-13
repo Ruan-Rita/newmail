@@ -28,6 +28,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/reports', function () {
         return Inertia::render('Reports');
     })->name('reports');
+
+    Route::get('/website', function () {
+        return Inertia::render('Website');
+    })->name('website');
 });
 
 
