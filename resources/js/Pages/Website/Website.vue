@@ -1,8 +1,10 @@
 <script setup>
 import Paginator from '@/Components/Paginator.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 import Table from '@/Components/Table.vue';
 import Template from '@/Layouts/Template.vue';
-import { computed, onMounted, ref } from 'vue';
+import { Link } from '@inertiajs/vue3';
+import { computed, ref } from 'vue';
 
 const websites = ref({
     current_page: 0,
@@ -91,8 +93,21 @@ function getWebsites()
 <template>
     <Template title="Reports">
         <div class="py-8">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <h1 class="text-2xl font-extrabold mb-5">Websites</h1>
+            <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
+                <section class="flex justify-center">
+                    <div class="w-3/4">
+                        <h1 class="text-2xl font-extrabold mb-5">Websites</h1>
+                        <p class="text-gray-700">
+                            Você pode criar páginas personalizadas que complementam suas campanhas de email marketing, tornando suas interações com o cliente ainda mais completas e profissionais.
+                        </p>
+                    </div>
+
+                    <Link class="w-1/4 flex justify-end" :href="route('website.create')">
+                        <PrimaryButton class="bg-app-red h-fit">
+                            New Website
+                        </PrimaryButton>
+                    </Link>
+                </section>
             
                 <div class="overflow-hidden mt-8 rounded-lg shadow-app-blue shadow">
                     <Table :cols="tableColumns" :rows="rowsWebsites"/>

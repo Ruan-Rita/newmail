@@ -17,6 +17,11 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard/Dashboard');
     })->name('dashboard');
+    
+    Route::get('/dashboard/new-campaign', function () {
+        return Inertia::render('Dashboard/CreateCampaigns');
+    })->name('dashboard.create_campaign');
+
     Route::get('/customers', function () {
         return Inertia::render('Customers');
     })->name('customers');
@@ -30,13 +35,14 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     })->name('reports');
 
     Route::get('/website', function () {
-        return Inertia::render('Website');
+        return Inertia::render('Website/Website');
     })->name('website');
-});
 
+    Route::get('/website/new-webiste', function () {
+        return Inertia::render('Website/CreateWebsite');
+    })->name('website.create');
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
-    Route::get('/dashboard/new-campaign', function () {
-        return Inertia::render('Dashboard/CreateCampaigns');
-    })->name('dashboard.create_campaign');
+    Route::get('/automation', function () {
+        return Inertia::render('Automation/Automation');
+    })->name('automation');
 });

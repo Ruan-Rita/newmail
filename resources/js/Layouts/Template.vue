@@ -1,6 +1,6 @@
 <script setup>
-import { ref } from 'vue';
-import { Head, Link, router } from '@inertiajs/vue3';
+import { onMounted, ref } from 'vue';
+import { Head, router } from '@inertiajs/vue3';
 import Collapse from '@/Components/Collapse.vue';
 import Banner from '@/Components/Banner.vue';
 import TextInput from '@/Components/TextInput.vue';
@@ -15,12 +15,14 @@ import SettingSvg from '@/Components/Svg/SettingSvg.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
+import DialogModal from '@/Components/DialogModal.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 
+const showSupport = ref(false);
 
 defineProps({
     title: String,
 });
-
 
 const logout = () => {
     router.post(route('logout'));
@@ -31,9 +33,7 @@ const logout = () => {
 <template>
     <div>
         <Head :title="title" />
-
         <Banner />
-
         <div class="min-h-screen grid grid-cols-[300px_auto] bg-gray-100">
             <div style="background-color: #050F29;">
                 <nav class="w-full p-2 flex flex-col h-full max-h-screen py-10">
@@ -68,10 +68,8 @@ const logout = () => {
                                         </h1>
                                     </div>
                                 </template>
-                                <div class="px-5 py-2 bg-blue-950 mt-2">
-                                    <h1>Link a1</h1>
-                                    <h1>Link a2</h1>
-                                    <h1>Link a3</h1>
+                                <div class="px-5 py-2 pl-4mt-2 flex flex-col">
+                                    <NavLink :href="route('automation')" :class="{'bg-app-green': route().current('automation')}" class="hover:text-white rounded-md text-lg">Listas</NavLink>
                                 </div>
                             </Collapse>
                             <NavLink :href="route('website')" class="flex gap-4 items-center border-none group group-hover:text-gray-200 text-white ">
@@ -95,13 +93,12 @@ const logout = () => {
                         </section>
                     </div>
                     <section class="flex flex-col gap-5 px-5">
-                        <NavLink :href="route('customers')" class="flex gap-4 p-0 m-0 items-center border-none group group-hover:text-gray-200 text-white">
+                        <div @click="showSupport = true" class="px-1 cursor-pointer flex gap-4 p-0 m-0 items-center border-none group group-hover:text-gray-200 text-white">
                             <SupportSvg class="fill-gray-400"/>
                             <h1 class="text-xl text-gray-400">
                                 Supports
                             </h1>
-                        </NavLink>
-
+                        </div>
                         <NavLink :href="route('settings')" class="flex gap-4 p-0 m-0 items-center border-none group group-hover:text-gray-200 text-white">
                             <SettingSvg class="stroke-white"/>
 
@@ -179,4 +176,37 @@ const logout = () => {
             </div>
         </div>
     </div>
+    <DialogModal :show="showSupport" @close="showSupport = false">
+        <template #title>
+            <h2 class="text-2xl text-center font-bold text-gray-900 mb-4">Contact Support</h2>
+            <hr>
+        </template>
+
+        <template #content>
+            <div class="text-center">
+                <h1 class="text-xl font-semibold text-gray-900 mb-4">Entre em contato com os meios abaixo</h1>
+                <p class="text-sm text-gray-500 mb-6">O atendimento pode levar alguns dias para ser respondido</p>
+
+                <h2 class="text-lg font-medium text-gray-700 mb-4">Informações de contato:</h2>
+
+                <div class="mt-4 space-y-2">
+                    <p class="text-lg text-gray-800">
+                        <strong>Telefone:</strong> +55 (12) 98452 1234
+                    </p>
+                    <p class="text-lg text-gray-800">
+                        <strong>Email:</strong> 
+                        <a href="mailto:support@nextmail.com" class="text-blue-600 hover:underline">
+                            support@nextmail.com
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </template>
+        <template #footer>
+            <div class="w-full flex justify-center">
+                <PrimaryButton @click="showSupport = false" class="bg-app-blue">Retormar</PrimaryButton>
+            </div>
+        </template>
+    </DialogModal>
+
 </template>
