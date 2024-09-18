@@ -4,22 +4,11 @@ import Template from '@/Layouts/Template.vue';
 import WebsiteStepOne from './Partials/WebsiteStepOne.vue';
 import WebSiteStepTwo from './Partials/WebSiteStepTwo.vue';
 import WebsiteStepThree from './Partials/WebsiteStepThree.vue';
-import ProgressCreate from './Partials/ProgressCreate.vue';
 
 const stage = reactive({
     step: 0,
     campaign: {}
 })
-
-const getProgress = function () {
-    if (stage.step === 0) {
-        return 33;
-    }
-    if (stage.step === 1) {
-        return 66;
-    }
-    return 100
-}
 
 function success(campaign) {
     stage.campaign = campaign

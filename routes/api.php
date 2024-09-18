@@ -14,4 +14,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/campaigns', 'App\Http\Controllers\Api\CampaignApiController@update');
     
     Route::resource('/customers', 'App\Http\Controllers\Api\CustomerApiController');
+    Route::resource('/website', 'App\Http\Controllers\Api\WebSiteApiController');
 });

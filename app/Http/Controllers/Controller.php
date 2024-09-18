@@ -19,7 +19,7 @@ abstract class Controller
     /**
      *  Standard return api Error
      */
-    public function jsonError($errors = [], $code = 400, $message = null)
+    public function jsonError($message = null, $errors = [], $code = 400)
     {
         return json_encode([
             'status' => 'error',

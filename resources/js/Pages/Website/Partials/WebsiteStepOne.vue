@@ -6,6 +6,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import axios from 'axios';
+import { ref } from 'vue';
 
 const props = defineProps({
     step: {
@@ -20,81 +21,130 @@ const props = defineProps({
 const emit = defineEmits(['success']);
 
 
-const formCampaign = useForm({
-   title: 'ruan',
-   segmentation: 'top segm',
-   date: '2001-12-01',
-   hour: '14:20',
+const formWebsite = useForm({
+    title: 'Tennis pica das galáxias',
+    name: 'Pagina de compras',
+    subdomain: 'lover-bikes',
+    isPusblish: true,
+    indexable: true,
+    logo: 'https://play-lh.googleusercontent.com/DTzWtkxfnKwFO3ruybY1SKjJQnLYeuK3KmQmwV5OQ3dULr5iXxeEtzBLceultrKTIUTr'
 });
-const createCampaign = function() {
-    axios.post('/api/campaigns', {
-        ...formCampaign.data(),
-        send_at: `${formCampaign.date} ${formCampaign.hour}`
-    }).then(response => {
-        console.log('Success step 1',response.data, response.data.status === 'success');
-        if (response.data.status === 'success') {
-            emit('success', response.data.data)
-            return;
+
+const show = ref({
+    preview: null
+})
+
+
+const createWebsite = function() {
+    axios.post(route('website.store'), formWebsite.data).then(response => {
+        if (response.response) {
+            console.log('qual foi o response', response);
         }
-        formCampaign.setError(response.data.errors)
     })
 }
+
+function handleInputFile(event) {
+    const file = event.target.files[0]; // Pega o primeiro (e único) arquivo selecionado
+    const maxSize = 10 * 1024 * 1024; // Tamanho máximo de 10 MB em bytes
+
+    // Limpa a mensagem de erro anterior
+    let errorMessage = ''
+    formWebsite.setError('logo', errorMessage);
+
+    if (file) {
+        // Verifica o tipo do arquivo
+        if (!file.type.startsWith('image/')) {
+            errorMessage = 'Por favor, selecione um arquivo de imagem válido.';
+            formWebsite.setError('logo', errorMessage);
+            formWebsite.logo = null;
+            return;
+        }
+
+        // Verifica o tamanho do arquivo
+        if (file.size > maxSize) {
+            errorMessage = 'O arquivo é muito grande. O tamanho máximo permitido é 10 MB.';
+            formWebsite.setError('logo', errorMessage);
+            formWebsite.logo = null;
+            return;
+        }
+
+        // TODO: create component to input file
+        // create preview 
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const base64String = e.target.result;
+            show.value.preview = base64String
+        };
+
+        reader.readAsDataURL(file)
+    }
+}
+
 </script>
 <template>
     <h1 class="font-bold my-10 text-2xl text-app-blue">Nova Campaigns</h1>
     <div class="col-span-6 sm:col-span-4">
-        <InputLabel for="titleInput" value="Titulo" />
+        <InputLabel for="nameInput" value="Name of page" />
         <TextInput
-            id="title"
-            ref="titleInput"
-            v-model="formCampaign.title"
+            id="nameInput"
+            v-model="formWebsite.name"
             class="mt-1 block w-full"
         />
-        <InputError :message="formCampaign.errors.title" class="mt-2" />
+        <InputError :message="formWebsite.errors.name" class="mt-2" />
+    </div>
+    <div class="col-span-6 sm:col-span-4">
+        <InputLabel for="titleInput" value="Titulo" />
+        <TextInput
+            id="titleInput"
+            v-model="formWebsite.title"
+            class="mt-1 block w-full"
+        />
+        <InputError :message="formWebsite.errors.title" class="mt-2" />
     </div>
 
     <div class="col-span-6 sm:col-span-4">
-        <InputLabel for="segmentationInput" value="Segmentação" />
+        <InputLabel for="subdomain" value="URL" />
         <TextInput
-            id="segmentationInput"
-            ref="passwordInput"
-            v-model="formCampaign.segmentation"
+            id="subdomain"
+            v-model="formWebsite.subdomain"
             class="mt-1 block w-full"
         />
-        <InputError :message="formCampaign.errors.password" class="mt-2" />
+        <InputError :message="formWebsite.errors.subdomain" class="mt-2" />
     </div>
     <div>
-        <h1 class="font-bold text-app-blue">Agendar</h1>
-        <div class="flex gap-6 mt-2">
-            <div class="w-full">
-                <InputLabel for="segmentationInput" value="Data" />
-                <TextInput
-                    id="segmentationInput"
-                    ref="passwordInput"
-                    type="date"
-                    v-model="formCampaign.date"
-                    class="mt-1 block w-full"
-                />
+        <h1 class="font-bold text-app-blue my-5">Configurar</h1>
+        <div class="flex content-between">
+            <div class="w-1/2">
+                <label class="text-gray-700">
+                    <div class="mr-5">Status:</div>
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" v-model="formWebsite.isPusblish" class="border-gray-400" id=""> {{ formWebsite.isPusblish ? "Live" : "Rascunho" }}
+                    </div>
+                </label>
+                <div class="my-5"></div>
+                <label class="text-gray-700">
+                    <div class="mr-5">Indexar:</div>
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" v-model="formWebsite.indexable" class="border-gray-400" id=""> {{ formWebsite.indexable ? "Ativado" : "Desativado" }}
+                    </div>
+                </label>
             </div>
-            <div class="w-full">
-                <InputLabel for="segmentationInput" value="Horário" />
-                <TextInput
-                    id="segmentationInput"
-                    ref="passwordInput"
-                    type="time"
-                    v-model="formCampaign.hour"
-                    class="mt-1 block w-full"
-                />
+            <div class="w-1/2">
+                <h3 class="font-bold">Add logotipo (16x16):</h3>
+                <div>
+                    <img v-if="show.preview" :src="show.preview" alt="preview" class="my-5 w-20 h-20 object-cover">
+                    <input v-if="!show.preview" v-on:change="handleInputFile" type="file" id="fileInput" accept="image/*" />
+                    <button class="bg-app-red text-white px-5 py-3 rounded-md" v-if="show.preview" @click="show.preview = null, formWebsite.logo=null">Remover</button>
+                    <InputError :message="formWebsite.errors.logo" class="mt-2" />
+                </div>
             </div>
         </div>
     </div>
-    
-    
-    <ActionMessage :on="formCampaign.recentlySuccessful" class="me-3">
+    <ActionMessage :on="formWebsite.recentlySuccessful" class="me-3">
         Saved.
     </ActionMessage>
     <div class="flex justify-end">
-        <PrimaryButton @click="createCampaign" class="bg-app-blue" :class="{ 'opacity-25': formCampaign.processing }" :disabled="formCampaign.processing">
+        <PrimaryButton @click="createWebsite" class="bg-app-blue" :class="{ 'opacity-25': formWebsite.processing }" :disabled="formWebsite.processing">
             Continue
         </PrimaryButton>
     </div>  
