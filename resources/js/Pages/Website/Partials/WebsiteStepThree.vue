@@ -5,7 +5,7 @@ const props = defineProps({
     step: {
         type: Number
     },
-    campaign: {
+    website: {
         type: Object
     },
     success: {}

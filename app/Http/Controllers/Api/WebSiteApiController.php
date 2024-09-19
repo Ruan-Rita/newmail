@@ -39,7 +39,7 @@ class WebSiteApiController extends Controller
     
     public function update(Request $request, $id)
     {
-        
+        dd($request->all(), $id);
     }
 
     public function destroy(Request $request, $id)

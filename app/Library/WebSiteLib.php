@@ -31,7 +31,10 @@ class WebSiteLib implements LibraryInterface {
         // Valida a imagem
         $maxMB = 1024 * 10;
         $request->validate([
-            'logo' => "required|image|mimes:jpeg,png,jpg,gif|max:$maxMB",
+            'logo' => "nullable|image|mimes:jpeg,png,jpg,gif|max:$maxMB",
+            'title' => 'required|string',
+            'name' => 'required|string',
+            'subdomain' => 'required|string',
         ]);
 
         return true;

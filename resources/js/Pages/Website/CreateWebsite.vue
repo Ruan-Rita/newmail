@@ -7,11 +7,11 @@ import WebsiteStepThree from './Partials/WebsiteStepThree.vue';
 
 const stage = reactive({
     step: 0,
-    campaign: {}
+    website: {}
 })
 
-function success(campaign) {
-    stage.campaign = campaign
+function success(website) {
+    stage.website = website
     if (stage !== 2) {
         stage.step += 1;
     } else {
@@ -20,12 +20,12 @@ function success(campaign) {
 }
 </script>
 <template>
-    <Template title="Create Campaign">
+    <Template title="Create website">
         <section class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8 flex gap-16">
             <section class="flex flex-col gap-4 w-full">
-                <WebsiteStepOne    @success="success" :campaign="stage.campaign" :step="stage.step" v-if="stage.step == 0"/>
-                <WebSiteStepTwo    @success="success" :campaign="stage.campaign" :step="stage.step" v-else-if="stage.step == 1"/>
-                <WebsiteStepThree  @success="success" :campaign="stage.campaign" :step="stage.step" v-else-if="stage.step == 2"/>
+                <WebsiteStepOne    @success="success" :website="stage.website" :step="stage.step" v-if="stage.step == 0"/>
+                <WebSiteStepTwo    @success="success" :website="stage.website" :step="stage.step" v-else-if="stage.step == 1"/>
+                <WebsiteStepThree  @success="success" :website="stage.website" :step="stage.step" v-else-if="stage.step == 2"/>
             </section>
         </section>
     </Template>

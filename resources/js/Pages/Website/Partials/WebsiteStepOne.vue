@@ -12,7 +12,7 @@ const props = defineProps({
     step: {
         type: Number
     },
-    campaign: {
+    website: {
         type: Object
     },
     success: {}
@@ -41,8 +41,19 @@ const createWebsite = function() {
             'Content-Type': 'multipart/form-data', 
         },
     }).then(response => {
-        if (response.response) {
+        console.log('RESPONSE', response);
+        
+        if (response.status === 200) {
             console.log('qual foi o response', response);
+            emit('success', response.data.data)
+
+        }
+    }).catch( response => {
+        console.log("error", response.response);
+        if (response.response.status == 422) {
+            const errors = response.response.data.errors
+            const message = response.response.data.message
+            formWebsite.setError(errors)
         }
     })
 }
@@ -87,7 +98,7 @@ function handleInputFile(event) {
 
 </script>
 <template>
-    <h1 class="font-bold my-10 text-2xl text-app-blue">Nova Campaigns</h1>
+    <h1 class="font-bold my-10 text-2xl text-app-blue">Novo website</h1>
     <div class="col-span-6 sm:col-span-4">
         <InputLabel for="nameInput" value="Name of page" />
         <TextInput
