@@ -16,6 +16,10 @@ class WebSiteApiController extends Controller
             ->where('user_id', Auth::user()->id)
             ->paginate(7);
 
+        $websites->getCollection()->transform(function ($website) {
+            $website->publish_text = $website->publish ?: 'UnPublish';
+            return $website;
+        });
         return $this->json($websites);
     }
 
@@ -25,7 +29,7 @@ class WebSiteApiController extends Controller
         $data['logo'] = $request->file('logo');
         $library = new WebSiteLib($request->user());
         
-        if (! $library->validation($data)) {
+        if (! $library->validation($request)) {
             return $this->jsonError($library->message(), $library->errors());
         }
 

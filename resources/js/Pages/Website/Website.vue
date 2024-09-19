@@ -4,62 +4,19 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import Table from '@/Components/Table.vue';
 import Template from '@/Layouts/Template.vue';
 import { Link } from '@inertiajs/vue3';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 const websites = ref({
     current_page: 0,
-    data: [
-        {
-            name: 'teste',
-            slug: 'teste-soft',
-            status: 'published',
-            created_at: '20/08/2024',
-        },
-        {
-            name: 'teste',
-            slug: 'teste-soft',
-            status: 'published',
-            created_at: '20/08/2024',
-        },
-        {
-            name: 'teste',
-            slug: 'teste-soft',
-            status: 'published',
-            created_at: '20/08/2024',
-        },
-    ],
-    links: [
-  {
-    "url": null,
-    "label": "&laquo; Previous",
-    "active": false
-  },
-  {
-    "url": "http://127.0.0.1:8000/api/customers?page=1",
-    "label": "1",
-    "active": true
-  },
-  {
-    "url": "http://127.0.0.1:8000/api/customers?page=2",
-    "label": "2",
-    "active": false
-  },
-  {
-    "url": "http://127.0.0.1:8000/api/customers?page=3",
-    "label": "3",
-    "active": false
-  },
-  {
-    "url": "http://127.0.0.1:8000/api/customers?page=2",
-    "label": "Next &raquo;",
-    "active": false
-  }
-],
-    total: 3,
-})
+    data: [],
+    links: [],
+    total: 0,
+    per_page: 0,
+});
+
 const tableColumns = ref([
     'Name',
-    'Slug',
+    'Title',
     'Status',
     'Created',
     'Actions'
@@ -69,8 +26,8 @@ const rowsWebsites = computed(() => {
     return websites.value.data.map(websiteItem => {
         return [
             websiteItem.name,
-            websiteItem.slug,
-            websiteItem.status,
+            websiteItem.title,
+            websiteItem.publish_text,
             websiteItem.created_at,
             {
                 edit: editWebsiteCustomer, 
@@ -84,10 +41,19 @@ function editWebsiteCustomer()
 
 }
 
-function getWebsites() 
+function getWebsites(url = null) 
 {
-
+    return axios.get(url || route('website.index')).then(response => {
+        if (response.data.code === 200) {
+            const dataResponse = response.data.data;
+            websites.value = dataResponse
+        }
+    });
 }
+
+onMounted(() => {
+    getWebsites()
+});
 
 </script>
 <template>

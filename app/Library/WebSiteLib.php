@@ -5,7 +5,10 @@ namespace App\Library;
 use App\Models\User;
 use App\Models\Website;
 use File;
+use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 
 class WebSiteLib implements LibraryInterface {
 
@@ -13,6 +16,7 @@ class WebSiteLib implements LibraryInterface {
      * @var \App\Models\Website
      */
     private $model = Website::class;
+
     // private $reposity = WebsiteRespository::class;
 
     public $user;
@@ -22,14 +26,26 @@ class WebSiteLib implements LibraryInterface {
         $this->user = $user;
     }
 
-    public static function validation($data): bool
+    public static function validation(Request $request): bool
     {
+        // Valida a imagem
+        $maxMB = 1024 * 10;
+        $request->validate([
+            'logo' => "required|image|mimes:jpeg,png,jpg,gif|max:$maxMB",
+        ]);
+
         return true;
     }
 
-    public function uploadFile(File $file)
+    public function uploadFile(UploadedFile|null $file)
     {
-        return 'fake_path_url';
+        if ($file === null) return null;
+
+        $user_id = $this->user->id;
+
+        $path = $file->store("/media_world", 'public');
+
+        return $path;
     }
 
     public function storeWebsite($data): Website

@@ -27,7 +27,7 @@ const formWebsite = useForm({
     subdomain: 'lover-bikes',
     isPusblish: true,
     indexable: true,
-    logo: 'https://play-lh.googleusercontent.com/DTzWtkxfnKwFO3ruybY1SKjJQnLYeuK3KmQmwV5OQ3dULr5iXxeEtzBLceultrKTIUTr'
+    logo: null
 });
 
 const show = ref({
@@ -36,7 +36,11 @@ const show = ref({
 
 
 const createWebsite = function() {
-    axios.post(route('website.store'), formWebsite.data).then(response => {
+    axios.post(route('website.store'), formWebsite.data(), {
+        headers: {
+            'Content-Type': 'multipart/form-data', 
+        },
+    }).then(response => {
         if (response.response) {
             console.log('qual foi o response', response);
         }
@@ -75,7 +79,8 @@ function handleInputFile(event) {
             const base64String = e.target.result;
             show.value.preview = base64String
         };
-
+        
+        formWebsite.logo = file;
         reader.readAsDataURL(file)
     }
 }
