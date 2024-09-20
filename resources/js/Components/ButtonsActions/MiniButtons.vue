@@ -25,8 +25,6 @@ const props = defineProps({
         type: Object
     }
 })
-console.log('o que props estou recebendo', props);
-
 </script>
 
 <template>

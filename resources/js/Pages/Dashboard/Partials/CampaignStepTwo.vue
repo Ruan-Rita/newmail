@@ -18,7 +18,7 @@ const props = defineProps({
 })
 
 function renderContent() {
-    const data = campaign.content.ops[0].insert
+    const data = props.campaign.content.ops[0].insert
     const finalValue = String(data).replace(/(?<!>)\s+(?!<)|&nbsp;/g, ' ');
     return finalValue;
 }

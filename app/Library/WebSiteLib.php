@@ -66,6 +66,17 @@ class WebSiteLib implements LibraryInterface {
         ]);
     }
 
+    public function updateWebsite($id_website, $data): Website
+    {
+        $website = Website::where('id', $id_website)
+            ->where('user_id', $this->user->id)
+            ->firstOrFail();
+
+        $website->content = $data['content'];
+        $website->save();
+        return $website;
+    }
+
     public function errors(): array
     {
         return [];

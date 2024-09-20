@@ -39,7 +39,16 @@ class WebSiteApiController extends Controller
     
     public function update(Request $request, $id)
     {
-        dd($request->all(), $id);
+        $data = $request->all();
+
+        $library = new WebSiteLib($request->user());
+        
+        $request->validate([
+            'content' => 'required|string'
+        ]);
+
+        $updated = $library->updateWebsite($id, $data);
+        return $this->json($updated);
     }
 
     public function destroy(Request $request, $id)

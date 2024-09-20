@@ -4,7 +4,7 @@ import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import '@vueup/vue-quill/dist/vue-quill.bubble.css';
 import NoStyle from '@/Components/NoStyle.vue';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const emit = defineEmits(['success']);
 
@@ -19,18 +19,32 @@ const props = defineProps({
 })
 
 function renderContent() {
-    const data = website.content.ops[0].insert
+    const data = props.website.content.ops[0].insert
     const finalValue = String(data).replace(/(?<!>)\s+(?!<)|&nbsp;/g, ' ');
     return finalValue;
 }
 
 function submit() {
-    console.log('Success step 2');
-    emit('success')
+    console.log('Success step 2',renderContent());
+    axios.put(route('website.update', {website: props.website.id}), {content: renderContent()}).then(response => {
+        console.log('RESPONSE', response);
+        
+        if (response.status === 200) {
+            console.log('qual foi o response', response);
+            emit('success', response.data.data)
+
+        }
+    }).catch( response => {
+        console.log("error", response.response);
+        if (response.response.status == 422) {
+            const errors = response.response.data.errors
+            const message = response.response.data.message
+            formWebsite.setError(errors)
+        }
+    })
 }
 onMounted(() => {
     console.log('OUR props', props);
-    
 })
 
 </script>
