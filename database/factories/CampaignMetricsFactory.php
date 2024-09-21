@@ -22,7 +22,7 @@ class CampaignMetricsFactory extends Factory
      */
     public function definition(): array
     {
-        $date = $this->faker->date();
+        $date = $this->faker->dateTimeBetween('-12 Months', 'now');
         
         return [
             'interaction_type' => InteractionTypeEnum::CLICK,
