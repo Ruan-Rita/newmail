@@ -28,6 +28,7 @@ class CampaignFactory extends Factory
             'segmentation' => $this->faker->jobTitle(),
             'status' => CampaignStatusEnum::DRAFT,
             'send_at' => $date,
+            'emails_sent_count' => $this->faker->numberBetween(1000, 100000),
             'content' => $this->faker->text(),
             'user_id' => User::first()->id,
             'created_at' => $date,

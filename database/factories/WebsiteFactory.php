@@ -2,9 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Enum\Campaign\CampaignStatusEnum;
-use App\Models\Customer;
 use App\Models\User;
+use App\Models\Website;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -12,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class WebsiteFactory extends Factory
 {
-    protected $model = Customer::class;
+    protected $model = Website::class;
 
     /**
      * Define the model's default state.

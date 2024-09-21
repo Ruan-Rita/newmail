@@ -1,6 +1,7 @@
 <script setup>
 import Template from '@/Layouts/Template.vue';
-import { ref } from 'vue';
+import axios from 'axios';
+import { onMounted, ref } from 'vue';
 
 const data = ref({
     options: {
@@ -16,6 +17,20 @@ const data = ref({
     data: [30, 40, 45, 50, 49, 60, 70, 91]
     }]
 });
+
+function retrieveReports() {
+    axios.get(route('reports.index')).then(response => {
+        console.log("Getting Reports", response.data);
+        if (response.status === 200) {
+            console.log('Make something');
+        }
+    })
+}
+
+onMounted(() => {
+    retrieveReports()
+});
+
 </script>
 <template>
     <Template title="Reports">

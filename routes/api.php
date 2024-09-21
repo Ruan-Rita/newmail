@@ -15,4 +15,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::resource('/customers', 'App\Http\Controllers\Api\CustomerApiController');
     Route::resource('/website', 'App\Http\Controllers\Api\WebSiteApiController');
+    Route::get('/reports', 'App\Http\Controllers\Api\ReportsApiController@index')->name('reports.index');
 });

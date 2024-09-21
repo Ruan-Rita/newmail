@@ -15,7 +15,7 @@ class CampaignSeeder extends Seeder
     {
         if ( Campaign::count() <= 50) {
             Campaign::factory()->count(50)->create([
-                'user_id' => User::where('email', 'ruan@nexmail.com')->firstOrFail()->id
+                'user_id' => User::where('email', 'ruan@nexmail.com')->firstOrFail()->id,
             ]);
         }
     }

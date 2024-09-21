@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('status', array_map(fn ($case) => $case->value, CampaignStatusEnum::cases()))->nullable()->default(CampaignStatusEnum::DRAFT);
             $table->dateTime('send_at');
             $table->text('content')->nullable();
+            $table->unsignedInteger('emails_sent_count')->default(0);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->timestamps();

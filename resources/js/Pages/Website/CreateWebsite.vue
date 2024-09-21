@@ -10,13 +10,13 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SuccessModal from '@/Components/SuccessModal.vue';
 
 const stage = reactive({
-    step: 3,
+    step: 0,
     website: {}
 })
 
 function success(website) {
     stage.website = website
-    if (stage.step <= 3) {
+    if (stage.step <= 2) {
         stage.step += 1;
     } 
 }
@@ -29,16 +29,16 @@ function success(website) {
                 <WebSiteStepTwo    @success="success" :website="stage.website" :step="stage.step" v-else-if="stage.step == 1"/>
             </section>
         </section>
-        <SuccessModal :closeable="false" :show="true">
+        <SuccessModal :closeable="false" :show="stage.step === 2">
             <template #title>
                 Success
             </template>
 
             <template #content>
-                <p>Vou acabou de finalizar seu novo site, logo em breve estará pronto para uso. Subindo seu site dentre alguns minutos.</p>
+                <p class="mb-10">Vou acabou de finalizar seu novo site, logo em breve estará pronto para uso. Subindo seu site dentre alguns minutos.</p>
                 <NavLink :href="route('website')" class="flex gap-4 items-center border-none group group-hover:text-gray-200 text-white ">
-                    <SecondaryButton class="mr-2" @click="optionCustomer.deleteConfirmation = false">
-                        Cancel
+                    <SecondaryButton class="mr-2">
+                        Close
                     </SecondaryButton>
                 </NavLink>
                 <NavLink :href="route('website')" class="flex gap-4 items-center border-none group group-hover:text-gray-200 text-white ">
@@ -46,7 +46,6 @@ function success(website) {
                         Meu sites
                     </PrimaryButton>
                 </NavLink>
-
             </template>
         </SuccessModal>
     </Template>
