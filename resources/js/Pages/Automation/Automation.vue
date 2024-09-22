@@ -84,24 +84,19 @@ function linkAdded(link) {
 </script>
 <template>
   <Template title="Reports">
-    <!-- <div class="bg-green-100 pt-5">
-      <h1 class="text-center font-bold">Simple flowchart</h1>
-      <div class="relative flex justify-center py-5">
-        <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" v-model="dataFlow.newNodeType">
-          <option v-for="(item, index) in dataFlow.nodeCategory" :key="index" :value="index">{{item}}</option>
-        </select>
-        <TextInput type="text" v-model="dataFlow.newNodeLabel" placeholder="Input node label" />
-        <PrimaryButton class="bg-app-blue" @click="addNode">ADD</PrimaryButton>
-      </div>
-    </div> -->
+    <div class="bg-gray-700 h-full flex justify-center items-center flex-col">
+      <h1 class="text-white text-4xl">Page not ready</h1>
+      <p class="text-white text-2xl mb-10">We're coming soon</p>
+      <img alt="Página em construção" src="/img/under-construction.jpg" class="rounded-3xl"/>
+    </div>
     
-    <simple-flowchart :scene.sync="dataFlow.scene" 
+    <!-- <simple-flowchart :scene.sync="dataFlow.scene" 
       @nodeClick="nodeClick"
       @nodeDelete="nodeDelete"
       @linkBreak="linkBreak"
       @linkAdded="linkAdded"
       @canvasClick="canvasClick"
       :height="800">
-    </simple-flowchart>
+    </simple-flowchart> -->
   </Template>
 </template>

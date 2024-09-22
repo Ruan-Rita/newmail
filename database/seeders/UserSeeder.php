@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;use Illuminate\Database\Seeder;
 
@@ -14,11 +15,15 @@ class UserSeeder extends Seeder
     {
         User::factory(2)->create();
         if (! User::where('email', 'ruan@nexmail.com')->exists()) {
-            User::factory()->withPersonalTeam()->create([
+            $user = User::factory()->withPersonalTeam()->create([
                 'name' => 'Test User',
-                    'email' => 'ruan@nexmail.com',
-                    'password'=> Hash::make('tO9}6EA83vjW'),
+                'email' => 'ruan@nexmail.com',
+                'password'=> Hash::make('tO9}6EA83vjW'),
+            ]);
+            Setting::create([
+                'user_id' => $user->id
             ]);
         }
+
     }
 }

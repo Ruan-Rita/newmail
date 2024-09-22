@@ -18,6 +18,29 @@ import NavLink from '@/Components/NavLink.vue';
 import DialogModal from '@/Components/DialogModal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 
+// Estado para saber se o modo escuro está ativado
+const isDarkMode = ref(false);
+
+// Função para alternar o tema
+const toggleDarkMode = () => {
+  isDarkMode.value = !isDarkMode.value;
+  document.documentElement.classList.toggle('dark', isDarkMode.value);
+  // Armazenar a preferência no localStorage
+  localStorage.setItem('theme', isDarkMode.value ? 'dark' : 'light');
+}
+
+// Checar a preferência do tema ao carregar o componente
+onMounted(() => {
+  const storedTheme = localStorage.getItem('theme');
+  if (storedTheme === 'dark' || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    isDarkMode.value = true;
+    document.documentElement.classList.add('dark');
+  } else {
+    isDarkMode.value = false;
+    document.documentElement.classList.remove('dark');
+  }
+});
+
 const showSupport = ref(false);
 
 defineProps({
@@ -34,8 +57,8 @@ const logout = () => {
     <div>
         <Head :title="title" />
         <Banner />
-        <div class="min-h-screen grid grid-cols-[300px_auto] bg-gray-100">
-            <div style="background-color: #050F29;" class="relative">
+        <div class="min-h-screen grid grid-cols-[300px_auto] bg-gray-100 dark:bg-gray-900">
+            <div class="bg-app-blue-dark dark:bg-app-black  relative">
                 <nav class="w-full p-2 flex flex-col h-full max-h-screen max-w-[300px] py-10 fixed">
                     <div class="flex-grow">
                         <div class="flex items-center gap-4 py-3 px-4">
@@ -109,7 +132,7 @@ const logout = () => {
                     </section>
                 </nav>
             </div>      
-            <div>
+            <div class="h-full flex flex-col">
                 <div class="border-b border-gray-200">
                     <nav class="flex justify-between items-center max-w-7xl mx-auto sm:px-6 lg:px-8 py-5">
                         
@@ -142,20 +165,21 @@ const logout = () => {
                             </Dropdown>
                         </div>
                         
-                        <div class="flex items-center gap-3">
-                            <TextInput class="w-72" placeholder="Search here . . ."/>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24" fill="none">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M11.7009 7.14697C9.62899 7.14697 8.64717 8.38197 7.66632 10.607C7.09252 12.1293 6.80727 13.75 6.82587 15.382C8.24252 16.4412 9.94777 17.0173 11.7009 17.029C13.454 17.0173 15.1592 16.4412 16.5759 15.382C16.5948 13.75 16.3099 12.1294 15.7364 10.607C14.7546 8.38197 13.7727 7.14697 11.7009 7.14697Z" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M14.5904 19.2745C14.9209 19.0248 14.9865 18.5545 14.7368 18.224C14.4872 17.8934 14.0168 17.8279 13.6863 18.0775L14.5904 19.2745ZM9.71536 18.0775C9.38484 17.8279 8.91451 17.8934 8.66486 18.224C8.41521 18.5545 8.48078 19.0248 8.81131 19.2745L9.71536 18.0775ZM10.8887 4.75C10.4744 4.75 10.1387 5.08579 10.1387 5.5C10.1387 5.91421 10.4744 6.25 10.8887 6.25V4.75ZM12.513 6.25C12.9272 6.25 13.263 5.91421 13.263 5.5C13.263 5.08579 12.9272 4.75 12.513 4.75V6.25ZM13.6863 18.0775C12.5041 18.9704 10.8975 18.9704 9.71536 18.0775L8.81131 19.2745C10.5285 20.5714 12.8732 20.5714 14.5904 19.2745L13.6863 18.0775ZM10.8887 6.25H12.513V4.75H10.8887V6.25Z" fill="#000000"/>
+                        <div class="flex items-center gap-1">
+                            <TextInput class="w-72 dark:bg-gray-800 dark:text-gray-300" placeholder="Search here . . ."/>
+                            <svg class="cursor-pointer fill-app-blue dark:fill-gray-500" xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24" fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M11.7009 7.14697C9.62899 7.14697 8.64717 8.38197 7.66632 10.607C7.09252 12.1293 6.80727 13.75 6.82587 15.382C8.24252 16.4412 9.94777 17.0173 11.7009 17.029C13.454 17.0173 15.1592 16.4412 16.5759 15.382C16.5948 13.75 16.3099 12.1294 15.7364 10.607C14.7546 8.38197 13.7727 7.14697 11.7009 7.14697Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M14.5904 19.2745C14.9209 19.0248 14.9865 18.5545 14.7368 18.224C14.4872 17.8934 14.0168 17.8279 13.6863 18.0775L14.5904 19.2745ZM9.71536 18.0775C9.38484 17.8279 8.91451 17.8934 8.66486 18.224C8.41521 18.5545 8.48078 19.0248 8.81131 19.2745L9.71536 18.0775ZM10.8887 4.75C10.4744 4.75 10.1387 5.08579 10.1387 5.5C10.1387 5.91421 10.4744 6.25 10.8887 6.25V4.75ZM12.513 6.25C12.9272 6.25 13.263 5.91421 13.263 5.5C13.263 5.08579 12.9272 4.75 12.513 4.75V6.25ZM13.6863 18.0775C12.5041 18.9704 10.8975 18.9704 9.71536 18.0775L8.81131 19.2745C10.5285 20.5714 12.8732 20.5714 14.5904 19.2745L13.6863 18.0775ZM10.8887 6.25H12.513V4.75H10.8887V6.25Z"/>
                             </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24" fill="none">
-                                <path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M22 12.0004C22 17.5232 17.5228 22.0004 12 22.0004C10.8358 22.0004 9.71801 21.8014 8.67887 21.4357C8.24138 20.3772 8 19.217 8 18.0004C8 15.7792 8.80467 13.7459 10.1384 12.1762C11.31 13.8818 13.2744 15.0004 15.5 15.0004C17.8615 15.0004 19.9289 13.741 21.0672 11.8572C21.3065 11.4612 22 11.5377 22 12.0004Z" fill="#1C274C"/>
-                                <path d="M2 12C2 16.3586 4.78852 20.0659 8.67887 21.4353C8.24138 20.3768 8 19.2166 8 18C8 15.7788 8.80467 13.7455 10.1384 12.1758C9.42027 11.1303 9 9.86422 9 8.5C9 6.13845 10.2594 4.07105 12.1432 2.93276C12.5392 2.69347 12.4627 2 12 2C6.47715 2 2 6.47715 2 12Z" fill="#1C274C"/>
+                            <svg v-if="!isDarkMode" class="fill-app-blue cursor-pointer dark:stroke-gray-500" @click="toggleDarkMode" xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24" fill="none">
+                                <path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M22 12.0004C22 17.5232 17.5228 22.0004 12 22.0004C10.8358 22.0004 9.71801 21.8014 8.67887 21.4357C8.24138 20.3772 8 19.217 8 18.0004C8 15.7792 8.80467 13.7459 10.1384 12.1762C11.31 13.8818 13.2744 15.0004 15.5 15.0004C17.8615 15.0004 19.9289 13.741 21.0672 11.8572C21.3065 11.4612 22 11.5377 22 12.0004Z"/>
+                                <path d="M2 12C2 16.3586 4.78852 20.0659 8.67887 21.4353C8.24138 20.3768 8 19.2166 8 18C8 15.7788 8.80467 13.7455 10.1384 12.1758C9.42027 11.1303 9 9.86422 9 8.5C9 6.13845 10.2594 4.07105 12.1432 2.93276C12.5392 2.69347 12.4627 2 12 2C6.47715 2 2 6.47715 2 12Z"/>
                             </svg>
+                            <svg v-else class="cursor-pointer dark:fill-yellow-500" @click="toggleDarkMode" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 256 256" height="30px" width="30px" xmlns="http://www.w3.org/2000/svg"><path d="M192,144a64.33,64.33,0,0,1-2,16H66a64,64,0,1,1,126-16Z" opacity="0.2"></path><path d="M240,152H199.55a73.54,73.54,0,0,0,.45-8,72,72,0,0,0-144,0,73.54,73.54,0,0,0,.45,8H16a8,8,0,0,0,0,16H240a8,8,0,0,0,0-16ZM72,144a56,56,0,1,1,111.41,8H72.59A56.13,56.13,0,0,1,72,144Zm144,56a8,8,0,0,1-8,8H48a8,8,0,0,1,0-16H208A8,8,0,0,1,216,200ZM72.84,43.58a8,8,0,0,1,14.32-7.16l8,16a8,8,0,0,1-14.32,7.16Zm-56,48.84a8,8,0,0,1,10.74-3.57l16,8a8,8,0,0,1-7.16,14.31l-16-8A8,8,0,0,1,16.84,92.42Zm192,15.16a8,8,0,0,1,3.58-10.73l16-8a8,8,0,1,1,7.16,14.31l-16,8a8,8,0,0,1-10.74-3.58Zm-48-55.16,8-16a8,8,0,0,1,14.32,7.16l-8,16a8,8,0,1,1-14.32-7.16Z"></path></svg>
                         </div>
                     </nav>
                 </div>
-                <main>
+                <main class="flex-grow">
                     <slot />
                 </main>
             </div>

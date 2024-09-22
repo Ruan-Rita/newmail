@@ -86,7 +86,7 @@ onMounted(() => {
         <div class="py-8">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex justify-between mb-5">
-                    <TextInput class="w-72" placeholder="Search here . . ."/>
+                    <TextInput class="w-72 dark:bg-gray-800 dark:text-gray-300" placeholder="Campaign name"/>
                     <Link :href="route('dashboard.create_campaign')">
                         <PrimaryButton class="bg-app-red">
                             New Campaign

@@ -22,9 +22,9 @@ defineProps({
         <th class="px-6 py-4 text-sm font-semibold uppercase" v-for="column of cols">{{ column }}</th>
       </tr>
     </thead>
-    <tbody class="[&>*:nth-child(even)]:bg-white">
-      <tr class="bg-gray-100 hover:!bg-red-100 transition duration-200" v-for="row of rows">
-        <td class="px-6 py-4 text-gray-900" v-for="(value, indexColumn) in cols">
+    <tbody class="[&>*:nth-child(even)]:bg-white dark:[&>*:nth-child(even)]:bg-app-blue-dark">
+      <tr class="bg-gray-100 dark:bg-app-black dark:text-gray-300 dark:hover:!bg-gray-600 hover:!bg-red-100 transition duration-200" v-for="row of rows">
+        <td class="px-6 py-4 text-gray-900 dark:text-gray-400" v-for="(value, indexColumn) in cols">
           <span v-if="typeof row[indexColumn] == 'string'">{{ row[indexColumn] }}</span>
           <span v-else-if="typeof row[indexColumn] == 'object' && row[indexColumn]">
             <MiniButtons 

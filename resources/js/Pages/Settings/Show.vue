@@ -11,16 +11,15 @@ import { useForm } from '@inertiajs/vue3';
 import Template from '@/Layouts/Template.vue';
 import ChangePlanForm from './Partials/ChangePlanForm.vue';
 import NotificationResourcesForm from './Partials/NotificationResourcesForm.vue';
+import { onMounted, watch } from 'vue';
+import axios from 'axios';
 
 
-defineProps({
+const props = defineProps({
     confirmsTwoFactorAuthentication: Boolean,
     sessions: Array,
+    settings: Object,
 });
-
-const formSettings = useForm({
-    
-})
 
 </script>
 <template>
@@ -32,15 +31,15 @@ const formSettings = useForm({
                     <div v-if="$page.props.jetstream.canUpdateProfileInformation">
                         <UpdateProfileInformationForm :user="$page.props.auth.user" />
                     </div>
-
                     <div v-if="$page.props.jetstream.canUpdatePassword">
                         <UpdatePasswordForm class="mt-10 sm:mt-0" />
                     </div>
                     <div>
-                        <ChangePlanForm />
+                        
+                        <ChangePlanForm :settings="settings"/>
                     </div>
                     <div>
-                        <NotificationResourcesForm />
+                        <NotificationResourcesForm :settings="settings"/>
                     </div>
                     <div v-if="$page.props.jetstream.canManageTwoFactorAuthentication">
                         <TwoFactorAuthenticationForm

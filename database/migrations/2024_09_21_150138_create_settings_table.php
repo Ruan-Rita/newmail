@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->string('plan');
-            $table->boolean('plan_limit_notify');
-            $table->boolean('resource_created_notify');
+            $table->string('plan')->default('free');
+            $table->boolean('plan_limit_notify')->default(false);
+            $table->boolean('resource_created_notify')->default(false);
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

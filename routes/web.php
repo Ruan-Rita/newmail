@@ -1,8 +1,11 @@
 <?php
 
+use App\Models\Setting;
 use App\Models\Website;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -27,8 +30,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         return Inertia::render('Customers');
     })->name('customers');
     
-    Route::get('/settings', function () {
-        return Inertia::render('Settings/Show');
+    Route::get('/settings', function (Request $request) {
+        return Inertia::render('Settings/Show', [
+            'settings' => $request->user()->settings
+        ]);
     })->name('settings');
    
     Route::get('/reports', function () {
