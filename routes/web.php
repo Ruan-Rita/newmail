@@ -28,7 +28,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     })->name('customers');
     
     Route::get('/settings', function () {
-        return Inertia::render('Settings');
+        return Inertia::render('Settings/Show');
     })->name('settings');
    
     Route::get('/reports', function () {
