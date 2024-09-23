@@ -11,6 +11,7 @@ import BitySvg from '@/Components/Svg/BitySvg.vue';
 import CodeBranchSvg from '@/Components/Svg/CodeBranchSvg.vue';
 import UserAstronautSvg from '@/Components/Svg/UserAstronautSvg.vue';
 import TextInput from '@/Components/TextInput.vue';
+import EmailSvg from '@/Components/Svg/EmailSvg.vue';
 
 
 
@@ -21,7 +22,7 @@ import TextInput from '@/Components/TextInput.vue';
     <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
         <header class="bg-white lg:mx-0 mx-4 flex justify-center">
             <div class="flex items-center justify-between max-w-5xl w-full py-4">
-                <h1 class="h-fit font-bold text-gray-900 text-2xl">NeXMail</h1>
+                <h1 class="h-fit font-bold text-gray-900 text-2xl flex items-center gap-2"><EmailSvg class="inline-block w-10 h-10 stroke-app-green fill-app-black"/>NeXMail</h1>
                 <div class="flex gap-3 items-center">
                     <Link class="outline-none" :href="route('login')"> Login</Link>
                     <Link class="bg-app-orange text-white px-3 py-2 rounded" :href="route('register')">
@@ -38,10 +39,12 @@ import TextInput from '@/Components/TextInput.vue';
 
         <main>
             <div class="flex justify-center"
-                style="background-image: linear-gradient(to bottom, #172e69, #12285c, #0d2350, #0a1d44, #071838, #1e1d43, #33224c, #482553, #842e61, #bd3e5d, #e85f4a, #fd9029)">
-                <div class="flex justify-between max-w-5xl w-full py-24 gap-10 lg:mx-0 mx-4">
+                style="background-image: linear-gradient(to bottom, #12285c, #0d2350, #1e1d43, #33224c, #482553, #e85f4a, #fd9029)">
+                <div class="flex justify-between max-w-5xl w-full py-40 gap-10 lg:mx-0 mx-4">
                     <div class="flex flex-col justify-center">
-                        <h3 class="text-app-orange font-bold text-2xl">NeXTMail</h3>
+                        <h3 class="text-app-orange font-bold text-2xl flex items-center gap-2">
+                            <EmailSvg class="inline-block w-10 h-10 stroke-app-green fill-app-black"/>
+                            NeXTMail</h3>
                         <h1 class="text-app-green font-bold text-6xl mt-3 mb-8 -ml-1">Email Marketing</h1>
                         <p class="text-white font-bold mb-2 text-xl">
                             Crie campainhas, programe eventos, automatize seus e-mails

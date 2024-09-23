@@ -62,7 +62,7 @@ const logout = () => {
                 <nav class="w-full p-2 flex flex-col h-full max-h-screen max-w-[300px] py-10 fixed">
                     <div class="flex-grow">
                         <div class="flex items-center gap-4 py-3 px-4">
-                            <EmailSvg class="w-10 h-10 stroke-app-green"/>
+                            <EmailSvg class="w-10 h-10 stroke-app-green fill-app-black"/>
                             <h1 class="text-2xl font-bold text-app-green">
                                 NeXMail
                             </h1>
